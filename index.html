@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PIXOLAND — Mini Bloques Edición Limitada</title>
+  <meta name="description" content="Mini bloques de construcción de edición limitada. Colecciones exclusivas de personajes icónicos. Arma, colecciona, exhibe." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:   #2563EB;
+      --pink:   #EC4899;
+      --yellow: #FBBF24;
+      --green:  #10B981;
+      --dark:   #111827;
+      --mid:    #374151;
+      --light:  #F9FAFB;
+      --white:  #FFFFFF;
+      --radius: 20px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--white);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    /* ───── NAV ───── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid #F3F4F6;
+      padding: 0 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+
+    .nav-logo {
+      font-size: 1.6rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      text-decoration: none;
+      color: var(--dark);
+    }
+    .nav-logo span { color: var(--blue); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--mid);
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--blue); }
+
+    .nav-badge {
+      background: var(--pink);
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.75rem;
+      padding: 4px 12px;
+      border-radius: 99px;
+      letter-spacing: 0.5px;
+    }
+
+    /* ───── HERO VIDEO ───── */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 560px;
+      max-height: 900px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.45) 0%,
+        rgba(0,0,0,0.25) 50%,
+        rgba(0,0,0,0.60) 100%
+      );
+      z-index: 1;
+    }
+
+    .hero-text {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 5%;
+      max-width: 800px;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: -2px;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+    }
+    .hero-text h1 .line-white { color: #fff; display: block; }
+    .hero-text h1 .line-blue  { color: #60A5FA; display: block; }
+    .hero-text h1 .line-pink  { color: #F472B6; display: block; }
+
+    .hero-text p {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.88);
+      font-weight: 600;
+      line-height: 1.6;
+      max-width: 480px;
+      margin: 0 auto 32px;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.5);
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--blue);
+      color: #fff;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 14px 32px;
+      border-radius: 99px;
+      text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 4px 20px rgba(37,99,235,0.55);
+    }
+    .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(37,99,235,0.65); }
+
+    /* scroll indicator */
+    .hero-scroll {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: scrollBounce 2s ease-in-out infinite;
+    }
+    .hero-scroll svg { opacity: 0.7; }
+    @keyframes scrollBounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* keep old image-grid style for future use if needed */
+    .hero-images { display: none; }
+    .hero-img-card { display: none; }
+
+    /* ───── STATS BAR ───── */
+    .stats {
+      background: var(--dark);
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    .stat-item {
+      flex: 1;
+      text-align: center;
+      padding: 28px 20px;
+      border-right: 1px solid #1F2937;
+      max-width: 260px;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 900;
+      display: block;
+    }
+    .stat-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #9CA3AF;
+      margin-top: 4px;
+    }
+    .stat-item:nth-child(1) .stat-number { color: var(--blue); }
+    .stat-item:nth-child(2) .stat-number { color: var(--pink); }
+    .stat-item:nth-child(3) .stat-number { color: var(--yellow); }
+    .stat-item:nth-child(4) .stat-number { color: var(--green); }
+
+    /* ───── COLLECTION SECTION ───── */
+    .section {
+      padding: 72px 5%;
+    }
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1.1;
+    }
+    .section-title span { color: var(--blue); }
+
+    /* ───── FILTER TABS ───── */
+    .filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .filter-btn {
+      background: #F3F4F6;
+      border: none;
+      border-radius: 99px;
+      padding: 10px 22px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--mid);
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--blue);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+    }
+    .filter-btn.active { transform: translateY(-1px); }
+
+    /* ───── PRODUCT GRID ───── */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .product-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 2px solid transparent;
+      transition: all .3s cubic-bezier(.34,1.56,.64,1);
+      cursor: pointer;
+      position: relative;
+    }
+    .product-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: var(--blue);
+      box-shadow: 0 12px 40px rgba(37,99,235,0.15);
+    }
+
+    .product-card.hidden { display: none; }
+
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--pink);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 99px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+    .card-badge.genesis  { background: var(--blue); }
+    .card-badge.col2     { background: var(--green); }
+
+    .card-img-wrap {
+      background: #F9FAFB;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow: hidden;
+    }
+    .card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+    }
+    .product-card:hover .card-img-wrap img { transform: scale(1.12); }
+
+    .card-info {
+      padding: 14px 16px 18px;
+    }
+    .card-sku {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #9CA3AF;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .card-name {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--dark);
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+    .card-tag {
+      display: inline-block;
+      background: #EFF6FF;
+      color: var(--blue);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 99px;
+    }
+
+    /* ───── ABOUT SECTION ───── */
+    .about {
+      background: linear-gradient(135deg, #1E3A8A, #4C1D95);
+      color: #fff;
+      padding: 80px 5%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .about-text h2 {
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .about-text h2 span { color: var(--yellow); }
+    .about-text p {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #C7D2FE;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .about-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .feature-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 20px;
+      backdrop-filter: blur(8px);
+    }
+    .feature-icon { font-size: 2rem; margin-bottom: 10px; display: block; }
+    .feature-title {
+      font-weight: 800;
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+      color: #fff;
+    }
+    .feature-desc {
+      font-size: 0.82rem;
+      color: #A5B4FC;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    /* ───── MARQUEE ───── */
+    .marquee-wrap {
+      background: var(--yellow);
+      overflow: hidden;
+      padding: 14px 0;
+      border-top: 2px solid #F59E0B;
+      border-bottom: 2px solid #F59E0B;
+    }
+    .marquee-track {
+      display: flex;
+      gap: 40px;
+      animation: marquee 20s linear infinite;
+      white-space: nowrap;
+    }
+    .marquee-item {
+      font-weight: 900;
+      font-size: 0.9rem;
+      color: var(--dark);
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
+    .marquee-dot {
+      color: var(--blue);
+      margin: 0 8px;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ───── FOOTER ───── */
+    footer {
+      background: var(--dark);
+      color: #9CA3AF;
+      padding: 48px 5% 32px;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 40px;
+    }
+    .footer-brand .brand-name {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #fff;
+      display: block;
+      margin-bottom: 10px;
+      letter-spacing: -1px;
+    }
+    .footer-brand .brand-name span { color: var(--blue); }
+    .footer-brand p {
+      font-size: 0.88rem;
+      line-height: 1.6;
+      font-weight: 600;
+    }
+    .footer-col h4 {
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+      letter-spacing: 0.5px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li {
+      margin-bottom: 8px;
+      font-size: 0.87rem;
+      font-weight: 600;
+    }
+    .footer-bottom {
+      background: #0D1117;
+      text-align: center;
+      padding: 16px 5%;
+      font-size: 0.82rem;
+      color: #4B5563;
+      font-weight: 600;
+    }
+
+    /* ───── RESPONSIVE ───── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; text-align: center; }
+      .hero-text p { max-width: 100%; margin-left: auto; margin-right: auto; }
+      .hero-images { grid-template-columns: repeat(3, 1fr); }
+      .hero-img-card:nth-child(2),
+      .hero-img-card:nth-child(4),
+      .hero-img-card:nth-child(6) { transform: none; }
+      .about { grid-template-columns: 1fr; }
+      footer { grid-template-columns: 1fr; }
+      .stats { flex-wrap: wrap; }
+      .stat-item { min-width: 45%; border-right: none; border-bottom: 1px solid #1F2937; }
+    }
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .hero-images { grid-template-columns: repeat(2, 1fr); }
+      .products-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .about-features { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════ NAV ══════════════════ -->
+<nav>
+  <a class="nav-logo" href="#">PIXO<span>LAND</span></a>
+  <ul class="nav-links">
+    <li><a href="#coleccion">Colección</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <span class="nav-badge">EDICIÓN LIMITADA</span>
+</nav>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<section class="hero">
+  <div class="hero-text">
+    <h1>
+      <span class="line-dark">MINI BLOQUES</span>
+      <span class="line-blue">EDICIÓN</span>
+      <span class="line-pink">LIMITADA</span>
+    </h1>
+    <p>Personajes icónicos en formato micro. Cada pieza es única, coleccionable y diseñada para armar, exhibir y coleccionar.</p>
+    <a href="#coleccion" class="hero-cta">
+      Ver colección
+      <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+    </a>
+  </div>
+  <div class="hero-images">
+    <div class="hero-img-card"><img src="images/genesis/G1-AVS-1001-01.jpg" alt="Mini Bloque" loading="lazy" /></div>
+    <div class="hero-img-card"><img src="images/genesis/G1-AVS-1005-01.jpg" alt="Mini Bloque" loading="lazy" /></div>
+    <div class="hero-img-card"><img src="images/collection1/P1-MBS-0004a.jpg" alt="Mini Bloque" loading="lazy" /></div>
+    <div class="hero-img-card"><img src="images/genesis/G1-DBS-1001-01.jpg" alt="Mini Bloque" loading="lazy" /></div>
+    <div class="hero-img-card"><img src="images/collection1/P1-MNS-0001a.jpg" alt="Mini Bloque" loading="lazy" /></div>
+    <div class="hero-img-card"><img src="images/genesis/G1-BBS-1001-01.jpg" alt="Mini Bloque" loading="lazy" /></div>
+  </div>
+</section>
+
+<!-- ══════════════════ MARQUEE ══════════════════ -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">EDICIÓN LIMITADA <span class="marquee-dot">★</span></span>
+    <span class="marquee-item">MINI BLOQUES COLECCIONABLES <span class="marquee-dot">★</span></span>
+    <span class="marquee-item">NANO ESCALA <span class="marquee-dot">★</span></span>
+    <span class="marquee-item">PERSONAJES ICÓNICOS <span class="marquee-dot">★</span></span>
+    <span class="marquee-item">ARMA · EXHIBE · COLECCIONA <span class="marquee-dot">★</span></span>
+    <span class="marquee-item">PIXOLAND <span class="marquee-dot">★</span></span>
+    <span class="marquee-item">EDICIÓN LIMITADA <span class="marquee-dot">★</span></span>
+    <span class="marquee-item">MINI BLOQUES COLECCIONABLES <span class="marquee-dot">★</span></span>
+    <span class="marquee-item">NANO ESCALA <span class="marquee-dot">★</span></span>
+    <span class="marquee-item">PERSONAJES ICÓNICOS <span class="marquee-dot">★</span></span>
+    <span class="marquee-item">ARMA · EXHIBE · COLECCIONA <span class="marquee-dot">★</span></span>
+    <span class="marquee-item">PIXOLAND <span class="marquee-dot">★</span></span>
+  </div>
+</div>
+
+<!-- ══════════════════ STATS ══════════════════ -->
+<div class="stats">
+  <div class="stat-item">
+    <span class="stat-number">200+</span>
+    <span class="stat-label">Personajes disponibles</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">3</span>
+    <span class="stat-label">Colecciones únicas</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">Nano</span>
+    <span class="stat-label">Escala micro detallada</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">100%</span>
+    <span class="stat-label">Edición limitada</span>
+  </div>
+</div>
+
+<!-- ══════════════════ COLECCIÓN ══════════════════ -->
+<section class="section" id="coleccion">
+  <div class="section-header">
+    <h2 class="section-title">Nuestra <span>Colección</span></h2>
+  </div>
+
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">Todos</button>
+    <button class="filter-btn" data-filter="genesis">Genesis</button>
+    <button class="filter-btn" data-filter="collection1">Colección 1</button>
+    <button class="filter-btn" data-filter="collection2">Colección 2</button>
+  </div>
+
+  <div class="products-grid" id="productsGrid">
+
+    <!-- ── GENESIS ── -->
+    <div class="product-card" data-collection="genesis">
+      <span class="card-badge genesis">Genesis</span>
+      <div class="card-img-wrap"><img src="images/genesis/G1-AVS-1001-01.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">G1-AVS-1001</div>
+        <div class="card-name">Capitán América</div>
+        <span class="card-tag">Avengers</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="genesis">
+      <span class="card-badge genesis">Genesis</span>
+      <div class="card-img-wrap"><img src="images/genesis/G1-AVS-1002-01.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">G1-AVS-1002</div>
+        <div class="card-name">Iron Man</div>
+        <span class="card-tag">Avengers</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="genesis">
+      <span class="card-badge genesis">Genesis</span>
+      <div class="card-img-wrap"><img src="images/genesis/G1-AVS-1003-01.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">G1-AVS-1003</div>
+        <div class="card-name">Thor</div>
+        <span class="card-tag">Avengers</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="genesis">
+      <span class="card-badge genesis">Genesis</span>
+      <div class="card-img-wrap"><img src="images/genesis/G1-AVS-1004-01.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">G1-AVS-1004</div>
+        <div class="card-name">Black Widow</div>
+        <span class="card-tag">Avengers</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="genesis">
+      <span class="card-badge genesis">Genesis</span>
+      <div class="card-img-wrap"><img src="images/genesis/G1-AVS-1005-01.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">G1-AVS-1005</div>
+        <div class="card-name">Hulk</div>
+        <span class="card-tag">Avengers</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="genesis">
+      <span class="card-badge genesis">Genesis</span>
+      <div class="card-img-wrap"><img src="images/genesis/G1-AVS-1006-01.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">G1-AVS-1006</div>
+        <div class="card-name">Hawkeye</div>
+        <span class="card-tag">Avengers</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="genesis">
+      <span class="card-badge genesis">Genesis</span>
+      <div class="card-img-wrap"><img src="images/genesis/G1-AVS-1007-01.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">G1-AVS-1007</div>
+        <div class="card-name">Spider-Man</div>
+        <span class="card-tag">Avengers</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="genesis">
+      <span class="card-badge genesis">Genesis</span>
+      <div class="card-img-wrap"><img src="images/genesis/G1-AVS-1008-01.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">G1-AVS-1008</div>
+        <div class="card-name">Nick Fury</div>
+        <span class="card-tag">Avengers</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="genesis">
+      <span class="card-badge genesis">Genesis</span>
+      <div class="card-img-wrap"><img src="images/genesis/G1-BBS-1001-01.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">G1-BBS-1001</div>
+        <div class="card-name">Bomberman</div>
+        <span class="card-tag">Retro Gaming</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="genesis">
+      <span class="card-badge genesis">Genesis</span>
+      <div class="card-img-wrap"><img src="images/genesis/G1-DBS-1001-01.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">G1-DBS-1001</div>
+        <div class="card-name">Dragon Ball</div>
+        <span class="card-tag">Anime</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="genesis">
+      <span class="card-badge genesis">Genesis</span>
+      <div class="card-img-wrap"><img src="images/genesis/G1-DBS-1002-01.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">G1-DBS-1002</div>
+        <div class="card-name">Dragon Ball</div>
+        <span class="card-tag">Anime</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="genesis">
+      <span class="card-badge genesis">Genesis</span>
+      <div class="card-img-wrap"><img src="images/genesis/G1-DBS-1003-01.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">G1-DBS-1003</div>
+        <div class="card-name">Dragon Ball</div>
+        <span class="card-tag">Anime</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="genesis">
+      <span class="card-badge genesis">Genesis</span>
+      <div class="card-img-wrap"><img src="images/genesis/G1-DCS-1001-01.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">G1-DCS-1001</div>
+        <div class="card-name">DC Comics</div>
+        <span class="card-tag">DC</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="genesis">
+      <span class="card-badge genesis">Genesis</span>
+      <div class="card-img-wrap"><img src="images/genesis/G1-DCS-1002-01.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">G1-DCS-1002</div>
+        <div class="card-name">DC Comics</div>
+        <span class="card-tag">DC</span>
+      </div>
+    </div>
+
+    <!-- ── COLECCIÓN 1 ── -->
+    <div class="product-card" data-collection="collection1">
+      <span class="card-badge">Col. 1</span>
+      <div class="card-img-wrap"><img src="images/collection1/P1-MBS-0004a.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P1-MBS-0004</div>
+        <div class="card-name">Yoshi</div>
+        <span class="card-tag">Nintendo</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection1">
+      <span class="card-badge">Col. 1</span>
+      <div class="card-img-wrap"><img src="images/collection1/P1-MBS-0006a.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P1-MBS-0006</div>
+        <div class="card-name">Mario Bros</div>
+        <span class="card-tag">Nintendo</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection1">
+      <span class="card-badge">Col. 1</span>
+      <div class="card-img-wrap"><img src="images/collection1/P1-MBS-0008a.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P1-MBS-0008</div>
+        <div class="card-name">Mario Bros</div>
+        <span class="card-tag">Nintendo</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection1">
+      <span class="card-badge">Col. 1</span>
+      <div class="card-img-wrap"><img src="images/collection1/P1-MBS-0009a.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P1-MBS-0009</div>
+        <div class="card-name">Mario Bros</div>
+        <span class="card-tag">Nintendo</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection1">
+      <span class="card-badge">Col. 1</span>
+      <div class="card-img-wrap"><img src="images/collection1/P1-MMS-0010a.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P1-MMS-0010</div>
+        <div class="card-name">Mini Character</div>
+        <span class="card-tag">Colección 1</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection1">
+      <span class="card-badge">Col. 1</span>
+      <div class="card-img-wrap"><img src="images/collection1/P1-MMS-0011a.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P1-MMS-0011</div>
+        <div class="card-name">Mini Character</div>
+        <span class="card-tag">Colección 1</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection1">
+      <span class="card-badge">Col. 1</span>
+      <div class="card-img-wrap"><img src="images/collection1/P1-MMS-0012a.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P1-MMS-0012</div>
+        <div class="card-name">Mini Character</div>
+        <span class="card-tag">Colección 1</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection1">
+      <span class="card-badge">Col. 1</span>
+      <div class="card-img-wrap"><img src="images/collection1/P1-MNS-0001a.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P1-MNS-0001</div>
+        <div class="card-name">Ninja</div>
+        <span class="card-tag">Colección 1</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection1">
+      <span class="card-badge">Col. 1</span>
+      <div class="card-img-wrap"><img src="images/collection1/P1-MNS-0002a.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P1-MNS-0002</div>
+        <div class="card-name">Ninja</div>
+        <span class="card-tag">Colección 1</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection1">
+      <span class="card-badge">Col. 1</span>
+      <div class="card-img-wrap"><img src="images/collection1/P1-MNS-0003a.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P1-MNS-0003</div>
+        <div class="card-name">Ninja</div>
+        <span class="card-tag">Colección 1</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection1">
+      <span class="card-badge">Col. 1</span>
+      <div class="card-img-wrap"><img src="images/collection1/P1-DCS-0015a.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P1-DCS-0015</div>
+        <div class="card-name">DC Comics</div>
+        <span class="card-tag">DC</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection1">
+      <span class="card-badge">Col. 1</span>
+      <div class="card-img-wrap"><img src="images/collection1/P1-DCS-0022a.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P1-DCS-0022</div>
+        <div class="card-name">DC Comics</div>
+        <span class="card-tag">DC</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection1">
+      <span class="card-badge">Col. 1</span>
+      <div class="card-img-wrap"><img src="images/collection1/P1-MBG-0154a.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P1-MBG-0154</div>
+        <div class="card-name">Mini Character</div>
+        <span class="card-tag">Colección 1</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection1">
+      <span class="card-badge">Col. 1</span>
+      <div class="card-img-wrap"><img src="images/collection1/P1-MBG-0160b.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P1-MBG-0160</div>
+        <div class="card-name">Mini Character</div>
+        <span class="card-tag">Colección 1</span>
+      </div>
+    </div>
+
+    <!-- ── COLECCIÓN 2 ── -->
+    <div class="product-card" data-collection="collection2">
+      <span class="card-badge col2">Col. 2</span>
+      <div class="card-img-wrap"><img src="images/collection2/P2-EYM-0075-23.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P2-EYM-0075</div>
+        <div class="card-name">Mini Character</div>
+        <span class="card-tag">Colección 2</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection2">
+      <span class="card-badge col2">Col. 2</span>
+      <div class="card-img-wrap"><img src="images/collection2/P2-EYM-0076-24.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P2-EYM-0076</div>
+        <div class="card-name">Mini Character</div>
+        <span class="card-tag">Colección 2</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection2">
+      <span class="card-badge col2">Col. 2</span>
+      <div class="card-img-wrap"><img src="images/collection2/P2-HKS-0098-28.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P2-HKS-0098</div>
+        <div class="card-name">Mini Character</div>
+        <span class="card-tag">Colección 2</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection2">
+      <span class="card-badge col2">Col. 2</span>
+      <div class="card-img-wrap"><img src="images/collection2/P2-HKS-0099-29.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P2-HKS-0099</div>
+        <div class="card-name">Mini Character</div>
+        <span class="card-tag">Colección 2</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection2">
+      <span class="card-badge col2">Col. 2</span>
+      <div class="card-img-wrap"><img src="images/collection2/P2-HKS-0202-73.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P2-HKS-0202</div>
+        <div class="card-name">Mini Character</div>
+        <span class="card-tag">Colección 2</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection2">
+      <span class="card-badge col2">Col. 2</span>
+      <div class="card-img-wrap"><img src="images/collection2/P2-KAW-2564-184.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P2-KAW-2564</div>
+        <div class="card-name">Mini Character</div>
+        <span class="card-tag">Colección 2</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection2">
+      <span class="card-badge col2">Col. 2</span>
+      <div class="card-img-wrap"><img src="images/collection2/P2-KAW-2565-185.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P2-KAW-2565</div>
+        <div class="card-name">Mini Character</div>
+        <span class="card-tag">Colección 2</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection2">
+      <span class="card-badge col2">Col. 2</span>
+      <div class="card-img-wrap"><img src="images/collection2/P2-KUG-0186-72.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P2-KUG-0186</div>
+        <div class="card-name">Mini Character</div>
+        <span class="card-tag">Colección 2</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection2">
+      <span class="card-badge col2">Col. 2</span>
+      <div class="card-img-wrap"><img src="images/collection2/P2-MBE-0123-50.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P2-MBE-0123</div>
+        <div class="card-name">Mini Character</div>
+        <span class="card-tag">Colección 2</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection2">
+      <span class="card-badge col2">Col. 2</span>
+      <div class="card-img-wrap"><img src="images/collection2/P2-MBE-0124-51.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P2-MBE-0124</div>
+        <div class="card-name">Mini Character</div>
+        <span class="card-tag">Colección 2</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection2">
+      <span class="card-badge col2">Col. 2</span>
+      <div class="card-img-wrap"><img src="images/collection2/P2-MBE-0125-52.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P2-MBE-0125</div>
+        <div class="card-name">Mini Character</div>
+        <span class="card-tag">Colección 2</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection2">
+      <span class="card-badge col2">Col. 2</span>
+      <div class="card-img-wrap"><img src="images/collection2/P2-MBG-0158-57.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P2-MBG-0158</div>
+        <div class="card-name">Mini Character</div>
+        <span class="card-tag">Colección 2</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection2">
+      <span class="card-badge col2">Col. 2</span>
+      <div class="card-img-wrap"><img src="images/collection2/P2-PKB-2532-161.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P2-PKB-2532</div>
+        <div class="card-name">Pokémon</div>
+        <span class="card-tag">Colección 2</span>
+      </div>
+    </div>
+
+    <div class="product-card" data-collection="collection2">
+      <span class="card-badge col2">Col. 2</span>
+      <div class="card-img-wrap"><img src="images/collection2/P2-TCG-0165-61.jpg" alt="Mini Bloque" loading="lazy" /></div>
+      <div class="card-info">
+        <div class="card-sku">P2-TCG-0165</div>
+        <div class="card-name">Mini Character</div>
+        <span class="card-tag">Colección 2</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ ABOUT ══════════════════ -->
+<section class="about" id="nosotros">
+  <div class="about-text">
+    <h2>Pequeños en tamaño,<br/><span>enormes en detalle</span></h2>
+    <p>PIXOLAND nace de la pasión por el coleccionismo y los personajes icónicos. Cada mini bloque está diseñado en escala nano, con atención extrema al detalle y en cantidades limitadas.</p>
+    <p>No son juguetes, son piezas de colección. Cada personaje viene listo para armar y exhibir.</p>
+  </div>
+  <div class="about-features">
+    <div class="feature-card">
+      <span class="feature-icon">🧩</span>
+      <div class="feature-title">Nano Escala</div>
+      <div class="feature-desc">Mini bloques de alta precisión, similares en escala a los Nano Blocks</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">⭐</span>
+      <div class="feature-title">Edición Limitada</div>
+      <div class="feature-desc">Cada colección tiene stock limitado — una vez agotado, no se repone</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🎨</span>
+      <div class="feature-title">Alta Fidelidad</div>
+      <div class="feature-desc">Colores vibrantes y formas reconocibles de tus personajes favoritos</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🏆</span>
+      <div class="feature-title">Para Coleccionar</div>
+      <div class="feature-desc">Diseñados para exhibir. Perfectos para estantes, escritorios y vitrinas</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer id="contacto">
+  <div class="footer-brand">
+    <span class="brand-name">PIXO<span>LAND</span></span>
+    <p>Mini bloques de edición limitada. Personajes icónicos en escala nano, listos para armar, exhibir y coleccionar.</p>
+  </div>
+  <div class="footer-col">
+    <h4>COLECCIONES</h4>
+    <ul>
+      <li>Genesis</li>
+      <li>Colección 1</li>
+      <li>Colección 2</li>
+      <li>Próximamente...</li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>CONTACTO</h4>
+    <ul>
+      <li>infopixoland@gmail.com</li>
+      <li>Instagram</li>
+      <li>Facebook</li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  © 2026 PIXOLAND — Todos los derechos reservados. Mini Bloques Edición Limitada.
+</div>
+
+<!-- ══════════════════ JS ══════════════════ -->
+<script>
+  // Filter functionality
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.product-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.dataset.filter;
+      cards.forEach(card => {
+        if (filter === 'all' || card.dataset.collection === filter) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+
+  // Staggered entrance animation
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }, i * 40);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05 });
+
+  cards.forEach(card => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(30px)';
+    card.style.transition = 'opacity .5s ease, transform .5s ease';
+    observer.observe(card);
+  });
+</script>
+</body>
+</html>
