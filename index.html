@@ -543,10 +543,48 @@
     #scrollTopBtn:hover {
       background: rgba(255,255,255,0.22);
     }
+
+    /* Contact top bar */
+    .contact-bar {
+      background: #111827;
+      color: #e5e7eb;
+      font-size: 0.78rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      padding: 7px 5%;
+      letter-spacing: 0.02em;
+    }
+    .contact-bar a {
+      color: #e5e7eb;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color .2s;
+    }
+    .contact-bar a:hover { color: #fff; }
+    .contact-bar-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav {
+      position: relative !important;
+      top: auto !important;
+      z-index: auto !important;
+    }
   </style>
 </head>
 <body>
 <!-- ══════════════════ NAV ══════════════════ -->
+<div class="contact-bar-wrap">
+<div class="contact-bar">
+  <a href="mailto:infopixoland@gmail.com">✉ infopixoland@gmail.com</a>
+  <a href="https://wa.me/59172734273" target="_blank" rel="noopener">💬 WhatsApp +591 72734273</a>
+</div>
 <nav>
 <a class="nav-logo" href="#">PIXO<span>LAND</span></a>
 <ul class="nav-links">
@@ -556,6 +594,7 @@
 </ul>
 <span class="nav-badge">EDICIÓN LIMITADA</span>
 </nav>
+</div>
 <!-- ══════════════════ HERO ══════════════════ -->
 <section class="hero">
 <video autoplay="" class="hero-video" loop="" muted="" playsinline="" preload="auto">
