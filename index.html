@@ -511,6 +511,38 @@
       .products-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
       .about-features { grid-template-columns: 1fr; }
     }
+
+    /* Scroll to top button */
+    #scrollTopBtn {
+      position: fixed;
+      bottom: 32px;
+      right: 28px;
+      z-index: 999;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity .3s ease, transform .3s ease;
+      pointer-events: none;
+    }
+    #scrollTopBtn.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    #scrollTopBtn:hover {
+      background: rgba(255,255,255,0.22);
+    }
   </style>
 </head>
 <body>
@@ -589,13 +621,9 @@
 </div>
 <div class="filters">
 <button class="filter-btn active" data-filter="all">Todos</button>
-<button class="filter-btn" data-filter="Genesis">Genesis</button>
-<button class="filter-btn" data-filter="Marvel">Marvel</button>
-<button class="filter-btn" data-filter="DC">DC</button>
-<button class="filter-btn" data-filter="Star Wars">Star Wars</button>
-<button class="filter-btn" data-filter="Dragon Ball">Dragon Ball</button>
-<button class="filter-btn" data-filter="Nintendo">Nintendo</button>
-<button class="filter-btn" data-filter="Anime">Anime</button>
+<button class="filter-btn" data-filter="en-stock">EN STOCK</button>
+<button class="filter-btn" data-filter="muy-pronto">LOS QUE VIENEN</button>
+<button class="filter-btn" data-filter="sold-out">SOLD OUT</button>
 </div>
 <div class="products-grid" id="productsGrid">
 <!-- ── GENESIS ── -->
@@ -3952,10 +3980,19 @@
 
       const filter = btn.dataset.filter;
       cards.forEach(card => {
-        if (filter === 'all' || card.dataset.collection === filter) {
+        if (filter === 'all') {
           card.classList.remove('hidden');
         } else {
-          card.classList.add('hidden');
+          const badge = card.querySelector('.card-badge');
+          let show = false;
+          if (filter === 'en-stock' && badge && (badge.classList.contains('sticker-queda1') || badge.classList.contains('sticker-ultimo'))) {
+            show = true;
+          } else if (filter === 'muy-pronto' && badge && badge.classList.contains('sticker-muypronto')) {
+            show = true;
+          } else if (filter === 'sold-out' && badge && badge.classList.contains('sticker-soldout')) {
+            show = true;
+          }
+          show ? card.classList.remove('hidden') : card.classList.add('hidden');
         }
       });
     });
@@ -3981,5 +4018,6 @@
     observer.observe(card);
   });
 </script>
+<button id="scrollTopBtn" title="Ir arriba">↑</button>
 </body>
 </html>
