@@ -4056,6 +4056,19 @@
     card.style.transition = 'opacity .5s ease, transform .5s ease';
     observer.observe(card);
   });
+
+  // Scroll to top button
+  const scrollBtn = document.getElementById('scrollTopBtn');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 400) {
+      scrollBtn.classList.add('visible');
+    } else {
+      scrollBtn.classList.remove('visible');
+    }
+  });
+  scrollBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 </script>
 <button id="scrollTopBtn" title="Ir arriba">↑</button>
 </body>
